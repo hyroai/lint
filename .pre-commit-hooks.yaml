@@ -1,0 +1,4 @@
+-   id: static-analysis
+    name: static analysis
+    entry: static_analysis
+    language: python
