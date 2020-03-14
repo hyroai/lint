@@ -24,6 +24,5 @@ def test_detect_redundant_lambda():
         ast.parse,
         redundant_lambda.detect,
         tuple,
-        gamla.do_breakpoint,
         gamla.check(toolz.identity, AssertionError),
     )

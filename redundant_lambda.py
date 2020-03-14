@@ -26,7 +26,7 @@ def _get_call_arg_names(call: ast.Call) -> Iterable[str]:
     return toolz.pipe(
         call.args,
         # Generator expressions can also be given as arguments.
-        curried.filter(lambda arg: isinstance(arg, ast.arg)),
+        curried.filter(lambda arg: isinstance(arg, ast.Name)),
         curried.map(lambda arg: arg.id),
     )
 
@@ -39,7 +39,6 @@ _is_lambda_redundant = gamla.alljuxt(
             toolz.compose_left(_gen_lambda_arg_names, toolz.first),
             toolz.compose_left(lambda l: l.body, _get_call_arg_names, tuple),
         ),
-        gamla.do_breakpoint,
         gamla.star(
             lambda lambda_arg, internal_call_args: gamla.len_equals(
                 1, internal_call_args
