@@ -15,9 +15,7 @@ _file_contents_to_messages = toolz.compose_left(
 
 if __name__ == "__main__":
     toolz.pipe(
-        pathlib.Path("./").glob("*/*.py"),
-        tuple,
-        gamla.log_text("{}"),
+        pathlib.Path("./").glob("**/*.py"),
         curried.mapcat(_file_contents_to_messages),
         curried.map(print),
         tuple,  # Materialize.
