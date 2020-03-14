@@ -24,10 +24,15 @@ def _is_lambda_internal_invocation(l: ast.Lambda) -> bool:
 
 def _get_call_arg_names(call: ast.Call) -> Iterable[str]:
     return toolz.pipe(
-        call.args,
-        # Generator expressions can also be given as arguments.
-        curried.filter(lambda arg: isinstance(arg, ast.Name)),
-        curried.map(lambda arg: arg.id),
+        toolz.concat([call.args, call.keywords]),
+        curried.map(
+            gamla.curried_ternary(
+                # Generator expressions can also be given as arguments.
+                lambda arg: isinstance(arg, ast.Name),
+                lambda arg: arg.id,
+                gamla.just(None),
+            )
+        ),
     )
 
 
@@ -52,5 +57,5 @@ _is_lambda_redundant = gamla.alljuxt(
 detect = toolz.compose_left(
     _gen_lambdas,
     curried.filter(_is_lambda_redundant),
-    curried.map(lambda l: f"{l} is a redundant lambda!"),
+    curried.map(lambda l: f"redundant lambda in line {l.lineno}!"),
 )
