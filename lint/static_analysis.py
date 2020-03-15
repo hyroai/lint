@@ -6,7 +6,7 @@ import toolz
 from toolz import curried
 
 import gamla
-import redundant_lambda
+from lint import redundant_lambda
 
 _RULES = (redundant_lambda.detect,)
 
