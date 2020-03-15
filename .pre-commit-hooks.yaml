@@ -3,4 +3,4 @@
   description: Static analysis linter.
   entry: static-analysis
   language: python
-  type: [python]
+  types: [python]
