@@ -25,7 +25,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         curried.mapcat(_file_contents_to_messages),
         curried.map(print),
         tuple,
-        gamla.curried_ternary(toolz.identity, 1, 0),
+        gamla.curried_ternary(toolz.identity, gamla.just(1), gamla.just(0)),
     )
 
 
