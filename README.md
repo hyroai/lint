@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/hyroai/lint.svg?branch=master)](https://travis-ci.com/hyroai/lint)
+
 # Lint
 
 Python static analysis linting tools.
