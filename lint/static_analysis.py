@@ -1,6 +1,6 @@
 import argparse
 import ast
-from typing import Optional, Sequence
+from typing import Optional, Sequence, Tuple
 
 import toolz
 from toolz import curried
@@ -20,7 +20,7 @@ _file_contents_to_messages = toolz.compose_left(
 )
 
 
-def _pretty_print_findings(findings, filename: str):
+def _pretty_print_findings(findings: Tuple[str, ...], filename: str):
     print(filename)
     for finding in findings:
         print(finding)
