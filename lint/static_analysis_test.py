@@ -1,10 +1,9 @@
 import ast
 
-import redundant_lambda
-
 import toolz
 
 import gamla
+from lint import redundant_lambda
 
 
 def test_detect_redundant_lambda():
