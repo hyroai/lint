@@ -1,4 +1,5 @@
--   id: static-analysis
-    name: static analysis
-    entry: static_analysis
-    language: python
+- id: static-analysis
+  name: static analysis
+  description: Static analysis linter.
+  entry: static-analysis
+  language: python
