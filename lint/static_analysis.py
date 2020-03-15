@@ -22,7 +22,6 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         argv,
         parser.parse_args,
         lambda args: args.filenames,
-        curried.filter(str.endswith(".py")),
         curried.mapcat(_file_contents_to_messages),
         curried.map(print),
         tuple,
