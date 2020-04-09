@@ -26,7 +26,7 @@ def _get_call_arg_names(call: ast.Call) -> Iterable[str]:
     return toolz.pipe(
         toolz.concat([call.args, call.keywords]),
         curried.map(
-            gamla.curried_ternary(
+            gamla.ternary(
                 # Generator expressions can also be given as arguments.
                 lambda arg: isinstance(arg, ast.Name),
                 lambda arg: arg.id,

@@ -37,7 +37,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         curried.filter(toolz.first),
         curried.map(curried.do(gamla.star(_pretty_print_findings))),
         tuple,
-        gamla.curried_ternary(toolz.identity, gamla.just(1), gamla.just(0)),
+        gamla.ternary(toolz.identity, gamla.just(1), gamla.just(0)),
     )
 
 
