@@ -2,10 +2,10 @@ import argparse
 import ast
 from typing import Optional, Sequence, Tuple
 
+import gamla
 import toolz
 from toolz import curried
 
-import gamla
 from lint import redundant_lambda
 
 _RULES = (redundant_lambda.detect,)

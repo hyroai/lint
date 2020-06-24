@@ -1,8 +1,8 @@
 import ast
 
+import gamla
 import toolz
 
-import gamla
 from lint import redundant_lambda
 
 
