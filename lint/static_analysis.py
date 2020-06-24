@@ -21,9 +21,9 @@ _file_contents_to_messages = toolz.compose_left(
 
 
 def _pretty_print_findings(findings: Tuple[str, ...], filename: str):
-    print(filename)
+    print(filename)  # noqa
     for finding in findings:
-        print(finding)
+        print(finding)  # noqa
 
 
 def main(argv: Optional[Sequence[str]] = None) -> int:
