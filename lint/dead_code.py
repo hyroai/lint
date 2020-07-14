@@ -22,6 +22,10 @@ detect = gamla.compose_left(
             curried.filter(gamla.is_instance(ast.Name)),
             curried.map(lambda name: name.id),
         ),
+        gamla.compose_left(
+            curried.filter(gamla.is_instance(ast.Attribute)),
+            curried.map(lambda attribute: attribute.attr),
+        ),
     ),
     toolz.concat,
     curried.filter(lambda name: name.startswith("_")),

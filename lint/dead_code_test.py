@@ -49,3 +49,34 @@ def test_disallow_unused_async_private_function():
         dead_code.detect,
         gamla.check(toolz.count, AssertionError),
     )
+
+
+def test_class_methods_allowed():
+    toolz.pipe(
+        """@dataclasses.dataclass(frozen=True)
+class SomeClass:
+    # Some comment.
+    text: Text
+    _private_thing: Text = "bla"
+
+    def is_something(self) -> bool:
+        return self._private_thing in []
+    """,
+        ast.parse,
+        dead_code.detect,
+        gamla.check(toolz.complement(toolz.count), AssertionError),
+    )
+
+
+def test_class_methods_disallowed():
+    toolz.pipe(
+        """@dataclasses.dataclass(frozen=True)
+class SomeClass:
+    # Some comment.
+    text: Text
+    _private_thing: Text = "bla"
+""",
+        ast.parse,
+        dead_code.detect,
+        gamla.check(toolz.count, AssertionError),
+    )
