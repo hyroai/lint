@@ -32,12 +32,15 @@ detect = gamla.compose_left(
         operator.contains(
             {
                 "__code__",
+                "__contains__",
                 "__file__",
                 "__getitem__",
                 "__gt__",
                 "__len__",
                 "__name__",
+                "__post_init__",
                 "__repr__",
+                "__traceback__",
             }
         )
     ),
