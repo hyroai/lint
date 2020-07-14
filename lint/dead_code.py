@@ -5,7 +5,6 @@ import toolz
 from toolz import curried
 from toolz.curried import operator
 
-
 detect = gamla.compose_left(
     ast.walk,
     gamla.bifurcate(
@@ -29,7 +28,19 @@ detect = gamla.compose_left(
     ),
     toolz.concat,
     curried.filter(lambda name: name.startswith("_")),
-    curried.remove(operator.contains({"__file__", "__name__", "__repr__"})),
+    curried.remove(
+        operator.contains(
+            {
+                "__code__",
+                "__file__",
+                "__getitem__",
+                "__gt__",
+                "__len__",
+                "__name__",
+                "__repr__",
+            }
+        )
+    ),
     curried.countby(toolz.identity),
     curried.valfilter(operator.eq(1)),
     dict.keys,
