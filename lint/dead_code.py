@@ -10,7 +10,12 @@ detect = gamla.compose_left(
     ast.walk,
     gamla.bifurcate(
         gamla.compose_left(
-            curried.filter(gamla.is_instance(ast.FunctionDef)),
+            curried.filter(
+                gamla.anyjuxt(
+                    gamla.is_instance(ast.AsyncFunctionDef),
+                    gamla.is_instance(ast.FunctionDef),
+                )
+            ),
             curried.map(lambda function: function.name),
         ),
         gamla.compose_left(
@@ -20,6 +25,7 @@ detect = gamla.compose_left(
     ),
     toolz.concat,
     curried.filter(lambda name: name.startswith("_")),
+    curried.remove(operator.contains({"__file__", "__name__"})),
     curried.countby(toolz.identity),
     curried.valfilter(operator.eq(1)),
     dict.keys,

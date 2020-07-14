@@ -40,3 +40,12 @@ def test_disallow_unused_private_function():
         dead_code.detect,
         gamla.check(toolz.count, AssertionError),
     )
+
+
+def test_disallow_unused_async_private_function():
+    toolz.pipe(
+        "async def _hi():\n    return 1",
+        ast.parse,
+        dead_code.detect,
+        gamla.check(toolz.count, AssertionError),
+    )
