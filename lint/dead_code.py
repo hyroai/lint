@@ -25,7 +25,7 @@ detect = gamla.compose_left(
     ),
     toolz.concat,
     curried.filter(lambda name: name.startswith("_")),
-    curried.remove(operator.contains({"__file__", "__name__"})),
+    curried.remove(operator.contains({"__file__", "__name__", "__repr__"})),
     curried.countby(toolz.identity),
     curried.valfilter(operator.eq(1)),
     dict.keys,
