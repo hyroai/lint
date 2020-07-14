@@ -6,9 +6,9 @@ import gamla
 import toolz
 from toolz import curried
 
-from lint import redundant_lambda
+from lint import redundant_lambda, dead_code
 
-_RULES = (redundant_lambda.detect,)
+_RULES = (redundant_lambda.detect, dead_code.detect)
 
 _file_contents_to_messages = toolz.compose_left(
     gamla.log_text("{}"),

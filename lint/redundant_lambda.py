@@ -7,7 +7,7 @@ from toolz import curried
 from toolz.curried import operator
 
 _gen_lambdas = toolz.compose_left(
-    ast.walk, curried.filter(lambda x: isinstance(x, ast.Lambda)),
+    ast.walk, curried.filter(gamla.is_instance(ast.Lambda)),
 )
 
 
@@ -19,7 +19,7 @@ _is_unary_def = toolz.compose_left(_gen_lambda_arg_names, toolz.count, operator.
 
 
 def _is_lambda_internal_invocation(l: ast.Lambda) -> bool:
-    return toolz.pipe(l.body, lambda b: isinstance(b, ast.Call))
+    return toolz.pipe(l.body, gamla.is_instance(ast.Call))
 
 
 def _get_call_arg_names(call: ast.Call) -> Iterable[str]:
@@ -28,7 +28,7 @@ def _get_call_arg_names(call: ast.Call) -> Iterable[str]:
         curried.map(
             gamla.ternary(
                 # Generator expressions can also be given as arguments.
-                lambda arg: isinstance(arg, ast.Name),
+                gamla.is_instance(ast.Name),
                 lambda arg: arg.id,
                 gamla.just(None),
             ),
