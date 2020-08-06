@@ -6,7 +6,7 @@ import gamla
 import toolz
 from toolz import curried
 
-from lint import redundant_lambda, dead_code
+from lint import dead_code, redundant_lambda
 
 _RULES = (redundant_lambda.detect, dead_code.detect)
 

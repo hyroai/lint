@@ -13,9 +13,10 @@ detect = gamla.compose_left(
                 gamla.anyjuxt(
                     gamla.is_instance(ast.AsyncFunctionDef),
                     gamla.is_instance(ast.FunctionDef),
-                )
+                    gamla.is_instance(ast.ClassDef),
+                ),
             ),
-            curried.map(lambda function: function.name),
+            curried.map(lambda function_or_class: function_or_class.name),
         ),
         gamla.compose_left(
             curried.filter(gamla.is_instance(ast.Name)),
@@ -41,8 +42,8 @@ detect = gamla.compose_left(
                 "__post_init__",
                 "__repr__",
                 "__traceback__",
-            }
-        )
+            },
+        ),
     ),
     curried.countby(toolz.identity),
     curried.valfilter(operator.eq(1)),
