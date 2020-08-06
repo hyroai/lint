@@ -80,3 +80,12 @@ class SomeClass:
         dead_code.detect,
         gamla.check(toolz.count, AssertionError),
     )
+
+
+def test_private_class():
+    toolz.pipe(
+        "class _Something: pass; A = _Something()",
+        ast.parse,
+        dead_code.detect,
+        gamla.check(toolz.complement(toolz.count), AssertionError),
+    )
