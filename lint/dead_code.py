@@ -35,6 +35,7 @@ detect = gamla.compose_left(
                 "__code__",
                 "__contains__",
                 "__file__",
+                "__getattribute__",
                 "__getitem__",
                 "__gt__",
                 "__len__",
