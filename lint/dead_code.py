@@ -38,6 +38,7 @@ detect = gamla.compose_left(
                 "__getattribute__",
                 "__getitem__",
                 "__gt__",
+                "__hash__",
                 "__len__",
                 "__name__",
                 "__post_init__",
