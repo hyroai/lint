@@ -18,7 +18,7 @@ def _module_filter(module):
     )
 
 
-def get_modules() -> Tuple[Tuple[Text, Any], ...]:
+def _get_modules() -> Tuple[Tuple[Text, Any], ...]:
     return tuple(inspect.getmembers(package, _module_filter))
 
 
@@ -53,7 +53,7 @@ def _concat_module_members_string(
     )
 
 
-def create_api_string(modules: Tuple[Tuple[Text, Any], ...]) -> Text:
+def _create_api_string(modules: Tuple[Tuple[Text, Any], ...]) -> Text:
     return gamla.reduce(
         _concat_module_members_string,
         gamla.reduce(_concat_module_table_string, "API\n===\n\n", modules)
@@ -62,6 +62,11 @@ def create_api_string(modules: Tuple[Tuple[Text, Any], ...]) -> Text:
     )
 
 
-new_api = open("api.rst", "w")
-new_api.write(create_api_string(get_modules()))
-new_api.close()
+def main():
+    new_api = open("./docs/source/api.rst", "w")
+    new_api.write(_create_api_string(_get_modules()))
+    new_api.close()
+
+
+if __name__ == "__main__":
+    exit(main())
