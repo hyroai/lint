@@ -7,7 +7,8 @@ from toolz import curried
 from toolz.curried import operator
 
 _gen_lambdas = toolz.compose_left(
-    ast.walk, curried.filter(gamla.is_instance(ast.Lambda)),
+    ast.walk,
+    curried.filter(gamla.is_instance(ast.Lambda)),
 )
 
 
@@ -46,7 +47,8 @@ _is_lambda_redundant = gamla.alljuxt(
         ),
         gamla.star(
             lambda lambda_arg, internal_call_args: gamla.len_equals(
-                1, internal_call_args,
+                1,
+                internal_call_args,
             )
             and toolz.first(internal_call_args) == lambda_arg,
         ),
