@@ -4,7 +4,6 @@
   entry: static-analysis
   language: python
   types: [python]
-
 - id: make-api-doc
   name: make api documentation
   description: creates an api.rst file for readthedocs
