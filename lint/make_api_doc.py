@@ -66,6 +66,7 @@ def main():
     new_api = open("./docs/source/api.rst", "w")
     new_api.write(_create_api_string(_get_modules()))
     new_api.close()
+    return 0
 
 
 if __name__ == "__main__":
