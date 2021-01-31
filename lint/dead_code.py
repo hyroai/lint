@@ -1,36 +1,33 @@
 import ast
 
 import gamla
-import toolz
-from toolz import curried
-from toolz.curried import operator
 
 detect = gamla.compose_left(
     ast.walk,
     gamla.bifurcate(
         gamla.compose_left(
-            curried.filter(
+            gamla.filter(
                 gamla.anyjuxt(
                     gamla.is_instance(ast.AsyncFunctionDef),
                     gamla.is_instance(ast.FunctionDef),
                     gamla.is_instance(ast.ClassDef),
                 ),
             ),
-            curried.map(lambda function_or_class: function_or_class.name),
+            gamla.map(gamla.attrgetter("name")),
         ),
         gamla.compose_left(
-            curried.filter(gamla.is_instance(ast.Name)),
-            curried.map(lambda name: name.id),
+            gamla.filter(gamla.is_instance(ast.Name)),
+            gamla.map(gamla.attrgetter("id")),
         ),
         gamla.compose_left(
-            curried.filter(gamla.is_instance(ast.Attribute)),
-            curried.map(lambda attribute: attribute.attr),
+            gamla.filter(gamla.is_instance(ast.Attribute)),
+            gamla.map(gamla.attrgetter("attr")),
         ),
     ),
-    toolz.concat,
-    curried.filter(lambda name: name.startswith("_")),
-    curried.remove(
-        operator.contains(
+    gamla.concat,
+    gamla.filter(lambda name: name.startswith("_")),
+    gamla.remove(
+        gamla.contains(
             {
                 "__code__",
                 "__contains__",
@@ -47,8 +44,8 @@ detect = gamla.compose_left(
             },
         ),
     ),
-    curried.countby(toolz.identity),
-    curried.valfilter(operator.eq(1)),
+    gamla.count_by(gamla.identity),
+    gamla.valfilter(gamla.equals(1)),
     dict.keys,
-    curried.map(lambda name: f"`{name}` is defined but unused."),
+    gamla.map(gamla.wrap_str("`{}` is defined but unused.")),
 )

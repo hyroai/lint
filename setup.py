@@ -11,7 +11,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     packages=setuptools.find_namespace_packages(),
     zip_safe=False,
-    install_requires=["gamla", "toolz"],
+    install_requires=["gamla"],
     entry_points={"console_scripts": ["static-analysis=lint.static_analysis:main"]},
     include_package_data=True,
 )
