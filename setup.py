@@ -12,6 +12,11 @@ setuptools.setup(
     packages=setuptools.find_namespace_packages(),
     zip_safe=False,
     install_requires=["gamla"],
-    entry_points={"console_scripts": ["static-analysis=lint.static_analysis:main"]},
+    entry_points={
+        "console_scripts": [
+            "static-analysis=lint.static_analysis:main",
+            "make-api-doc=lint.make_api_doc:main",
+        ],
+    },
     include_package_data=True,
 )

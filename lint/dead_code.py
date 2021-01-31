@@ -41,6 +41,7 @@ detect = gamla.compose_left(
                 "__post_init__",
                 "__repr__",
                 "__traceback__",
+                "_",
             },
         ),
     ),

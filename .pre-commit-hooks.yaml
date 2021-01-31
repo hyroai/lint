@@ -4,3 +4,9 @@
   entry: static-analysis
   language: python
   types: [python]
+- id: make-api-doc
+  name: make api documentation
+  description: creates an api.rst file for readthedocs
+  entry: make-api-doc
+  language: python
+  types: [ python ]

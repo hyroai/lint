@@ -10,10 +10,10 @@ def test_detect_redundant_lambda():
         """something = functools.lru_cache(maxsize=1024)(
     gamla.compose_left(
         gamla.pipe(
-            _CONFIDENCE_ELEMENTS, curried.map(_collect_type), gamla.star(gamla.juxtcat)
+            _CONFIDENCE_ELEMENTS, gamla.map(_collect_type), gamla.star(gamla.juxtcat)
         ),
-        curried.filter(lambda element: element.confidence is not None),
-        curried.map(lambda element: element.confidence),
+        gamla.filter(lambda element: element.confidence is not None),
+        gamla.map(lambda element: element.confidence),
         tuple,
         gamla.check(lambda x: gamla.identity(x), ValueError),
         gamla.average,
