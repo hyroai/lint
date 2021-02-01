@@ -10,7 +10,8 @@ def test_good():
         "a = 3  # I am good.",
         "from nlu.config import logging_config  # noqa: F401",
         "    for element in filter(  # type: ignore",
-        '            url=render.add_utm_param("https://coronavirus.novanthealth.org/#screening"),',
+        '            url=render.add_utm_param("https://example.example.org/#screening"),',
+        "        # https://example.com/example/index.html#/example/",
     ]:
         gamla.pipe(
             good_comment,

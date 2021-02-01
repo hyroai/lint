@@ -20,7 +20,7 @@ detect = gamla.compose_left(
             ),
         ),
         gamla.compose_left(
-            gamla.filter(lambda s: re.search(r"#[^\s]", s)),
+            gamla.filter(lambda s: re.search(r"^\s*#[^\s]", s)),
             gamla.map(lambda s: f"Comment should start with a space: [{s}]"),
         ),
     ),
