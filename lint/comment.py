@@ -4,7 +4,7 @@ import gamla
 
 detect = gamla.compose_left(
     lambda s: s.split("\n"),
-    gamla.filter(gamla.compose_left(str.lower, lambda s: re.search(r"#.*", s))),
+    gamla.filter(gamla.compose_left(str.lower, lambda s: re.match(r"\s*#.*", s))),
     gamla.bifurcate(
         gamla.compose_left(
             gamla.filter(
