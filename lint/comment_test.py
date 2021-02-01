@@ -26,8 +26,6 @@ def test_bad():
         "# TODO ROM: uncomment when vaccine faq fixed",
         "# TODO (rachel): Remove if not relevant after rescraping novant's vaccine faq.",
         "#no leading space",
-        "# i am not capitalized",
-        "# No dot at end",
     ]:
         gamla.pipe(
             bad_comment,
