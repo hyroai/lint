@@ -12,6 +12,7 @@ def test_good():
         "    for element in filter(  # type: ignore",
         '            url=render.add_utm_param("https://example.example.org/#screening"),',
         "        # https://example.com/example/index.html#/example/",
+        "#: Bla bla.",
     ]:
         gamla.pipe(
             good_comment,
