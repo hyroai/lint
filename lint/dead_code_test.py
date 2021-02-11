@@ -14,6 +14,15 @@ def test_allow_unused_public():
     )
 
 
+def test_allow_double_underscore():
+    gamla.pipe(
+        'd.__getitem__("bla")',
+        ast.parse,
+        dead_code.detect,
+        gamla.check(gamla.complement(gamla.count), AssertionError),
+    )
+
+
 def test_disallow_unused_private():
     gamla.pipe(
         '_I_AM_A_CONSTANT = "asd"',

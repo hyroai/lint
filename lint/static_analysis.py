@@ -4,16 +4,19 @@ from typing import Optional, Sequence, Tuple
 
 import gamla
 
-from lint import dead_code, redundant_lambda
-
-_RULES = (redundant_lambda.detect, dead_code.detect)
+from lint import comment, dead_code, redundant_lambda
 
 _file_contents_to_messages = gamla.compose_left(
     gamla.log_text("{}"),
     open,
     lambda f: f.read(),
-    ast.parse,
-    gamla.juxtcat(*_RULES),
+    gamla.juxtcat(
+        gamla.compose_left(
+            ast.parse,
+            gamla.juxtcat(redundant_lambda.detect, dead_code.detect),
+        ),
+        comment.detect,
+    ),
     tuple,
 )
 
