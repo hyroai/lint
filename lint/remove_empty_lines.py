@@ -7,10 +7,11 @@ import gamla
 def _remove_empty_lines_in_file(filename):
     with open(filename, mode="rb") as file_processed:
         lines = file_processed.readlines()
-    lines = [line for line in lines if line]
+    non_empty_lines = [line for line in lines if line]
     with open(filename, mode="wb") as file_processed:
-        for line in lines:
+        for line in non_empty_lines:
             file_processed.write(line)
+    return len(lines) == len(non_empty_lines)
 
 
 def main(argv: Optional[Sequence[str]] = None) -> int:
@@ -22,7 +23,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         gamla.attrgetter("filenames"),
         gamla.map(_remove_empty_lines_in_file),
         tuple,
-        gamla.ternary(gamla.identity, gamla.just(1), gamla.just(0)),
+        gamla.ternary(gamla.allmap(gamla.identity), gamla.just(0), gamla.just(1)),
     )
 
 
