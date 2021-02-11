@@ -16,6 +16,7 @@ setuptools.setup(
         "console_scripts": [
             "static-analysis=lint.static_analysis:main",
             "make-api-doc=lint.make_api_doc:main",
+            "remove-empty-lines=lint.remove_empty_lines:main",
         ],
     },
     include_package_data=True,
