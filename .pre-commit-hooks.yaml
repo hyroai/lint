@@ -16,4 +16,5 @@
   name: remove empty lines
   description: Remove empty lines.
   entry: remove-empty-lines
+  language: python
   files: \.(csv)$
