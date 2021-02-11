@@ -10,7 +10,7 @@ _gen_lambdas = gamla.compose_left(
 
 
 def _gen_lambda_arg_names(l: ast.Lambda) -> Iterable[str]:
-    return gamla.pipe(l, lambda l: l.args.args, gamla.map(lambda a: a.arg))
+    return gamla.pipe(l, lambda l: l.args.args, gamla.map(gamla.attrgetter("arg")))
 
 
 _is_unary_def = gamla.compose_left(_gen_lambda_arg_names, gamla.count, gamla.equals(1))
@@ -27,7 +27,7 @@ def _get_call_arg_names(call: ast.Call) -> Iterable[str]:
             gamla.ternary(
                 # Generator expressions can also be given as arguments.
                 gamla.is_instance(ast.Name),
-                lambda arg: arg.id,
+                gamla.attrgetter("id"),
                 gamla.just(None),
             ),
         ),

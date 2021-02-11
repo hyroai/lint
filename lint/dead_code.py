@@ -13,15 +13,15 @@ detect = gamla.compose_left(
                     gamla.is_instance(ast.ClassDef),
                 ),
             ),
-            gamla.map(lambda function_or_class: function_or_class.name),
+            gamla.map(gamla.attrgetter("name")),
         ),
         gamla.compose_left(
             gamla.filter(gamla.is_instance(ast.Name)),
-            gamla.map(lambda name: name.id),
+            gamla.map(gamla.attrgetter("id")),
         ),
         gamla.compose_left(
             gamla.filter(gamla.is_instance(ast.Attribute)),
-            gamla.map(lambda attribute: attribute.attr),
+            gamla.map(gamla.attrgetter("attr")),
         ),
     ),
     gamla.concat,
@@ -31,5 +31,5 @@ detect = gamla.compose_left(
     gamla.count_by(gamla.identity),
     gamla.valfilter(gamla.equals(1)),
     dict.keys,
-    gamla.map(lambda name: f"`{name}` is defined but unused."),
+    gamla.map(gamla.wrap_str("`{}` is defined but unused.")),
 )

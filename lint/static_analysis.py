@@ -33,7 +33,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     return gamla.pipe(
         argv,
         parser.parse_args,
-        lambda args: args.filenames,
+        gamla.attrgetter("filenames"),
         gamla.map(gamla.pair_with(_file_contents_to_messages)),
         gamla.filter(gamla.head),
         gamla.map(gamla.side_effect(gamla.star(_pretty_print_findings))),
