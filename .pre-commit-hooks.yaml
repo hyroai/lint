@@ -12,9 +12,9 @@
   language: python
   types: [python]
 
-- id: remove-empty-lines
-  name: remove empty lines
-  description: Remove empty lines.
-  entry: remove-empty-lines
+- id: csv-format
+  name: format CSV files
+  description: Format CSV files (remove empty lines + sort).
+  entry: csv-format
   language: python
   files: \.(csv)$
