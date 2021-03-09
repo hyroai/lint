@@ -6,7 +6,7 @@ import gamla
 
 
 def _format_file(filename):
-    with open(filename, mode="rb") as file_processed:
+    with open(filename, mode="r") as file_processed:
         content_before = file_processed.readlines()
 
     with open(filename, mode="r") as file_processed:
@@ -15,14 +15,21 @@ def _format_file(filename):
     with open(filename, mode="w") as file_processed:
         csv.writer(file_processed).writerows(
             gamla.pipe(
-                rows, gamla.filter(gamla.identity), gamla.sort_by(gamla.head), tuple
+                rows,
+                gamla.filter(gamla.identity),
+                gamla.sort_by(gamla.head),
+                tuple,
             ),
         )
 
-    with open(filename, mode="rb") as file_processed:
+    with open(filename, mode="r") as file_processed:
         content_after = file_processed.readlines()
 
-    return content_before == content_after
+    identical = content_before == content_after
+    if not identical:
+        print(f"File {filename} has been modified.")  # noqa:T001
+
+    return identical
 
 
 def main(argv: Optional[Sequence[str]] = None) -> int:
