@@ -43,10 +43,7 @@ _is_lambda_redundant = gamla.alljuxt(
             gamla.compose_left(lambda l: l.body, _get_call_arg_names, tuple),
         ),
         gamla.star(
-            lambda lambda_arg, internal_call_args: gamla.len_equals(
-                1,
-                internal_call_args,
-            )
+            lambda lambda_arg, internal_call_args: len(internal_call_args) == 1
             and gamla.head(internal_call_args) == lambda_arg,
         ),
     ),
