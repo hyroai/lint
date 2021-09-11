@@ -1,78 +1,42 @@
 """Script for updating api.rst in accordance with changes in the repository"""
-import importlib
 import inspect
 import sys
-from typing import Any, Callable, Iterable, Tuple
+from importlib import util as importlib_util
+from typing import Callable
 
 import gamla
 
 
-def _module_filter(package_name: str):
-    def module_filter(module):
-        return (
-            inspect.ismodule(module)
-            and package_name in str(module)
-            and "test" not in str(module)
-        )
-
-    return module_filter
+def _load_module_from_path(path: str):
+    spec = importlib_util.spec_from_file_location("gamla", path)
+    module = importlib_util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(module)
+    return module
 
 
-def _get_function_table_entries(module: Tuple[str, Any]) -> str:
-    return "".join(
-        f"   {o[0]}\n"
-        for o in inspect.getmembers(module)
-        if inspect.isfunction(o[1]) and o[0][0] != "_"
-    )
+def _process_function_name_and_doc(name: str, doc: str) -> str:
+    return f"## {name}\n\n{doc}\n\n"
 
 
-def _concat_module_table_string(package_name: str):
-    def concat_module_table_string(string_so_far: str, module: Tuple[str, Any]) -> str:
-        return "".join(
-            gamla.concat_with(
-                f"{module[0]}\n{len(module[0]) * '-'}\n\n.. currentmodule:: {package_name}.{module[0]}\n\n.. autosummary::\n{_get_function_table_entries(module[1])}\n",
-                string_so_far,
-            ),
-        )
-
-    return concat_module_table_string
-
-
-def _concat_module_members_string(package_name: str):
-    def concat_module_members_string(string_so_far: str, module: str) -> str:
-        return "".join(
-            gamla.concat_with(
-                f".. automodule:: {package_name}.{module}\n   :members:\n\n",
-                string_so_far,
-            ),
-        )
-
-    return concat_module_members_string
-
-
-def _create_api_string(package_name: str) -> Callable[[Iterable[str]], str]:
-    return lambda modules: gamla.reduce(
-        _concat_module_members_string(package_name),
-        gamla.reduce(_concat_module_table_string(package_name), "API\n===\n\n", modules)
-        + "Definitions\n-----------\n\n",
-    )
+_process_module: Callable[[str], str] = gamla.compose_left(
+    _load_module_from_path,
+    inspect.getmembers,
+    gamla.filter(lambda member: inspect.isfunction(member[1]) and member[0][0] != "_"),
+    gamla.map(gamla.packstack(gamla.identity, inspect.getdoc)),
+    gamla.remove(gamla.compose(gamla.equals(None), gamla.second)),
+    gamla.map(gamla.star(_process_function_name_and_doc)),
+    "\n".join,
+)
 
 
 def main():
-    print(sys.argv[1])  # noqa
-    print(sys.argv)  # noqa
     gamla.pipe(
-        sys.argv[1],
-        inspect.getmembers,
-        gamla.filter(
-            gamla.compose_left(
-                gamla.second,
-                _module_filter(importlib.import_module(sys.argv[1])),
-            ),
-        ),
-        gamla.map(gamla.head),
-        gamla.prepare_and_apply(_create_api_string(sys.argv[1])),
-        open("./docs/source/api.rst", "w").write,
+        sys.argv[1:],
+        gamla.remove(gamla.anyjuxt(gamla.equals("setup.py"), gamla.inside("_test.py"))),
+        gamla.map(_process_module),
+        "\n".join,
+        open("./docs.md", "w").write,
     )
     return 0
 
