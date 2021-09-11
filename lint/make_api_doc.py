@@ -59,7 +59,8 @@ def _create_api_string(package_name: str) -> Callable[[Iterable[str]], str]:
 
 
 def main():
-    raise Exception
+    print(sys.argv[1])  # noqa
+    print(sys.argv)  # noqa
     gamla.pipe(
         sys.argv[1],
         inspect.getmembers,
