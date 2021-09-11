@@ -7,7 +7,6 @@ from typing import Any, Text, Tuple
 import gamla
 
 _PACKAGE_NAME = sys.argv[1]
-package = importlib.import_module(_PACKAGE_NAME)
 
 
 def _module_filter(module):
@@ -18,7 +17,7 @@ def _module_filter(module):
     )
 
 
-def _get_modules() -> Tuple[Tuple[Text, Any], ...]:
+def _get_modules(package) -> Tuple[Tuple[Text, Any], ...]:
     return tuple(inspect.getmembers(package, _module_filter))
 
 
@@ -64,7 +63,9 @@ def _create_api_string(modules: Tuple[Tuple[Text, Any], ...]) -> Text:
 
 def main():
     new_api = open("./docs/source/api.rst", "w")
-    new_api.write(_create_api_string(_get_modules()))
+    new_api.write(
+        _create_api_string(_get_modules(importlib.import_module(".", _PACKAGE_NAME))),
+    )
     new_api.close()
     return 0
 
