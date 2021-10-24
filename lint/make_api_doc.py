@@ -14,6 +14,7 @@ def _module_filter(module):
         inspect.ismodule(module)
         and _PACKAGE_NAME in str(module)
         and "test" not in str(module)
+        and "optimized" not in str(module)
     )
 
 
@@ -64,7 +65,9 @@ def _create_api_string(modules: Tuple[Tuple[Text, Any], ...]) -> Text:
 def main():
     with open("./docs/source/api.rst", "w") as new_api_file:
         new_api_file.write(
-            _create_api_string(_get_modules(importlib.import_module(".", _PACKAGE_NAME))),
+            _create_api_string(
+                _get_modules(importlib.import_module(".", _PACKAGE_NAME))
+            ),
         )
     return 0
 
