@@ -62,11 +62,10 @@ def _create_api_string(modules: Tuple[Tuple[Text, Any], ...]) -> Text:
 
 
 def main():
-    new_api = open("./docs/source/api.rst", "w")
-    new_api.write(
-        _create_api_string(_get_modules(importlib.import_module(".", _PACKAGE_NAME))),
-    )
-    new_api.close()
+    with open("./docs/source/api.rst", "w") as new_api_file:
+        new_api_file.write(
+            _create_api_string(_get_modules(importlib.import_module(".", _PACKAGE_NAME))),
+        )
     return 0
 
 
