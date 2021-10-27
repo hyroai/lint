@@ -66,7 +66,7 @@ def main():
     with open("./docs/source/api.rst", "w") as new_api_file:
         new_api_file.write(
             _create_api_string(
-                _get_modules(importlib.import_module(".", _PACKAGE_NAME))
+                _get_modules(importlib.reload(importlib.import_module(_PACKAGE_NAME))),
             ),
         )
     return 0
