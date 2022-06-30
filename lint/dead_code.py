@@ -23,6 +23,16 @@ detect = gamla.compose_left(
             gamla.filter(gamla.is_instance(ast.Attribute)),
             gamla.map(gamla.attrgetter("attr")),
         ),
+        gamla.compose_left(
+            gamla.filter(gamla.is_instance(ast.alias)),
+            gamla.map(
+                gamla.compose_left(
+                    gamla.juxt(*map(gamla.attrgetter, ("asname", "name"))),
+                    gamla.filter(bool),
+                    gamla.head,
+                ),
+            ),
+        ),
     ),
     gamla.concat,
     gamla.filter(lambda name: name.startswith("_")),

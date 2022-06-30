@@ -97,3 +97,12 @@ def test_private_class():
         dead_code.detect,
         gamla.check(gamla.complement(gamla.count), AssertionError),
     )
+
+
+def test_private_module():
+    gamla.pipe(
+        "from . import _a;print(_a.symbol)",
+        ast.parse,
+        dead_code.detect,
+        gamla.check(gamla.complement(gamla.count), AssertionError),
+    )
