@@ -27,7 +27,7 @@ def _format_file(filename):
 
     identical = content_before == content_after
     if not identical:
-        print(f"File {filename} has been modified.")  # noqa:T001
+        print(f"File {filename} has been modified.")  # noqa:T201
 
     return identical
 
