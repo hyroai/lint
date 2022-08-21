@@ -15,7 +15,7 @@
 - id: format-csv
   name: format CSV files
   description: Format CSV files (remove empty lines + sort).
-  entry: csv-format
+  entry: format-csv
   language: python
   files: triplets\.csv$
 
