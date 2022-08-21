@@ -21,6 +21,5 @@ def test_detect_redundant_lambda():
 )""",
         ast.parse,
         redundant_lambda.detect,
-        tuple,
-        gamla.check(gamla.identity, AssertionError),
+        gamla.assert_that(gamla.nonempty),
     )
