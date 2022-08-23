@@ -5,7 +5,7 @@ from typing import Optional, Sequence
 import gamla
 
 
-def get_duplicated_objects(relations):
+def _get_objects_from_relations(relations):
     return gamla.compose_left(
         gamla.filter(
             gamla.compose_left(
@@ -14,6 +14,12 @@ def get_duplicated_objects(relations):
             ),
         ),
         gamla.mapcat(gamla.compose_left(gamla.nth(2), gamla.split_text(","))),
+    )
+
+
+def get_duplicated_references(relations):
+    return gamla.compose_left(
+        _get_objects_from_relations(relations),
         gamla.count_by(gamla.identity),
         gamla.valfilter(gamla.greater_than(1)),
         dict.keys,
@@ -21,22 +27,41 @@ def get_duplicated_objects(relations):
     )
 
 
+def get_detached_references(relations):
+    return gamla.compose_left(
+        gamla.juxt(
+            gamla.compose_left(_get_objects_from_relations(relations), set),
+            gamla.compose_left(gamla.map(gamla.head), set),
+        ),
+        gamla.star(set.difference),
+        tuple,
+    )
+
+
 def _format_file(relations):
     def format_file(filename):
         with open(filename, mode="r") as file_processed:
-            duplicated_objects = gamla.pipe(
+            duplicated_references, detached_references = gamla.pipe(
                 file_processed,
                 csv.reader,
                 tuple,
-                get_duplicated_objects(relations),
+                gamla.juxt(
+                    get_duplicated_references(relations),
+                    get_detached_references(relations),
+                ),
             )
 
-        if duplicated_objects:
+        if duplicated_references:
             print(  # noqa:T201
-                f"[{filename}] - Some objects are used more than once: {', '.join(duplicated_objects)}.",
+                f"[{filename}] - Some references are used more than once: {', '.join(duplicated_references)}.",
             )
 
-        return not bool(duplicated_objects)
+        if detached_references:
+            print(  # noqa:T201
+                f"[{filename}] - Some references are defined but not used: {', '.join(detached_references)}.",
+            )
+
+        return not bool(duplicated_references) and not bool(detached_references)
 
     return format_file
 
