@@ -1,13 +1,25 @@
+import pytest
+
 from lint import format_triplets
 
 
-def test_good():
-    assert not format_triplets.get_duplicated_objects(["rel"])(
+@pytest.mark.parametrize(
+    "rows",
+    (
         [["a", "rel", "b"]],
-    )
+        [["a", "rel", "b,d"], ["c", "rel", "e,f"]],
+    ),
+)
+def test_good(rows):
+    assert not format_triplets.get_duplicated_objects(["rel"])(rows)
 
 
-def test_bad():
-    assert format_triplets.get_duplicated_objects(["rel"])(
+@pytest.mark.parametrize(
+    "rows",
+    (
         [["a", "rel", "b"], ["c", "rel", "b"]],
-    )
+        [["a", "rel", "b,d"], ["c", "rel", "b,e"]],
+    ),
+)
+def test_bad(rows):
+    assert format_triplets.get_duplicated_objects(["rel"])(rows)

@@ -13,7 +13,7 @@ def get_duplicated_objects(relations):
                 gamla.contains(frozenset(relations)),
             ),
         ),
-        gamla.map(gamla.nth(2)),
+        gamla.mapcat(gamla.compose_left(gamla.nth(2), gamla.split_text(","))),
         gamla.count_by(gamla.identity),
         gamla.valfilter(gamla.greater_than(1)),
         dict.keys,
@@ -44,7 +44,7 @@ def _format_file(relations):
 def main(argv: Optional[Sequence[str]] = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("filenames", nargs="*")
-    parser.add_argument("--relations", nargs='+', default=[])
+    parser.add_argument("--relations", nargs="+", default=[])
     args = parser.parse_args(argv)
     return gamla.pipe(
         args.filenames,
