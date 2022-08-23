@@ -21,7 +21,7 @@ repos:
       - id: add-trailing-comma
 
   - repo: https://github.com/ambv/black
-    rev: 20.8b1
+    rev: 22.6.0
     hooks:
       - id: black
 

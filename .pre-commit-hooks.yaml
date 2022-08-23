@@ -12,9 +12,16 @@
   language: python
   types: [python]
 
-- id: csv-format
+- id: format-csv
   name: format CSV files
   description: Format CSV files (remove empty lines + sort).
-  entry: csv-format
+  entry: format-csv
   language: python
-  files: \.(csv)$
+  files: triplets\.csv$
+
+- id: validate-triplets
+  name: validate triplets files
+  description: Validate triplets files format (no duplicate references).
+  entry: validate-triplets
+  language: python
+  files: triplets\.csv$

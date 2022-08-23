@@ -16,7 +16,8 @@ setuptools.setup(
         "console_scripts": [
             "static-analysis=lint.static_analysis:main",
             "make-api-doc=lint.make_api_doc:main",
-            "csv-format=lint.csv_format:main",
+            "format-csv=lint.format_csv:main",
+            "validate-triplets=lint.validate_triplets:main",
         ],
     },
     include_package_data=True,
