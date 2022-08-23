@@ -5,14 +5,18 @@ from typing import Optional, Sequence
 import gamla
 
 
+def _get_rows_from_relations(relations):
+    return gamla.filter(
+        gamla.compose_left(
+            gamla.second,
+            gamla.contains(frozenset(relations)),
+        ),
+    )
+
+
 def _get_objects_from_relations(relations):
     return gamla.compose_left(
-        gamla.filter(
-            gamla.compose_left(
-                gamla.second,
-                gamla.contains(frozenset(relations)),
-            ),
-        ),
+        _get_rows_from_relations(relations),
         gamla.mapcat(gamla.compose_left(gamla.nth(2), gamla.split_text(","))),
     )
 
@@ -27,7 +31,7 @@ def get_duplicated_references(relations):
     )
 
 
-def get_detached_references(relations):
+def get_non_defined_references(relations):
     return gamla.compose_left(
         gamla.juxt(
             gamla.compose_left(_get_objects_from_relations(relations), set),
@@ -38,16 +42,36 @@ def get_detached_references(relations):
     )
 
 
+def get_non_referenced_subjects(relations):
+    return gamla.compose_left(
+        gamla.juxt(
+            gamla.compose_left(
+                _get_rows_from_relations(relations),
+                gamla.map(gamla.head),
+                set,
+            ),
+            gamla.compose_left(_get_objects_from_relations(relations), set),
+        ),
+        gamla.star(set.difference),
+        tuple,
+    )
+
+
 def _format_file(relations):
     def format_file(filename):
         with open(filename, mode="r") as file_processed:
-            duplicated_references, detached_references = gamla.pipe(
+            (
+                duplicated_references,
+                non_defined_references,
+                non_referenced_subjects,
+            ) = gamla.pipe(
                 file_processed,
                 csv.reader,
                 tuple,
                 gamla.juxt(
                     get_duplicated_references(relations),
-                    get_detached_references(relations),
+                    get_non_defined_references(relations),
+                    get_non_referenced_subjects(relations),
                 ),
             )
 
@@ -56,12 +80,19 @@ def _format_file(relations):
                 f"[{filename}] - Some references are used more than once: {', '.join(duplicated_references)}.",
             )
 
-        if detached_references:
+        if non_defined_references:
             print(  # noqa:T201
-                f"[{filename}] - Some references are defined but not used: {', '.join(detached_references)}.",
+                f"[{filename}] - Some references are not defined: {', '.join(non_defined_references)}.",
             )
 
-        return not bool(duplicated_references) and not bool(detached_references)
+        if non_referenced_subjects:
+            print(  # noqa:T201
+                f"[{filename}] - Some subjects are defined but not referenced: {', '.join(non_referenced_subjects)}.",
+            )
+
+        return not any(
+            [duplicated_references, non_defined_references, non_referenced_subjects],
+        )
 
     return format_file
 
