@@ -19,9 +19,9 @@
   language: python
   files: triplets\.csv$
 
-- id: format-triplets
-  name: format triplets files
-  description: Format CSV files (remove empty lines + sort).
-  entry: format-triplets
+- id: validate-triplets
+  name: validate triplets files
+  description: Validate triplets files format (no duplicate references).
+  entry: validate-triplets
   language: python
   files: triplets\.csv$
