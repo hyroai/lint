@@ -41,6 +41,17 @@ def _format_file(relations):
     return format_file
 
 
+def _check_has_3_columns(filename):
+    with open(filename, "r") as f:
+        for line in csv.reader(f):
+            if len(line) != 3:
+                print(
+                    f"Line in triplet file contains more/less than 3 elements!\nline:{line}\nfile:{filename}."
+                )
+                return False
+        return True
+
+
 def main(argv: Optional[Sequence[str]] = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("filenames", nargs="*")
@@ -48,9 +59,10 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     args = parser.parse_args(argv)
     return gamla.pipe(
         args.filenames,
-        gamla.map(_format_file(args.relations)),
-        tuple,
-        gamla.ternary(gamla.allmap(gamla.identity), gamla.just(0), gamla.just(1)),
+        gamla.mapcat(gamla.juxt(_format_file(args.relations), _check_has_3_columns)),
+        all,
+        gamla.not_,
+        int,
     )
 
 
