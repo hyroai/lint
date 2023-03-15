@@ -41,7 +41,7 @@ def _format_file(relations):
     return format_file
 
 
-def _check_has_3_columns(filename):
+def _check_has_3_columns(filename: str) -> bool:
     with open(filename, "r") as f:
         for line in csv.reader(f):
             if len(line) != 3:
