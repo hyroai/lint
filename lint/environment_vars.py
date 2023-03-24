@@ -4,9 +4,9 @@ import gamla
 
 _gen_getenv = gamla.compose_left(
     ast.walk,
-    gamla.filter(gamla.is_instance(ast.Call)),
+    gamla.filter(gamla.is_instance(ast.Attribute)),
     gamla.filter(
-        lambda node: node.func.attr == "getenv",
+        lambda node: node.attr == "getenv",
     ),
 )
 
