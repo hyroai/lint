@@ -4,7 +4,13 @@ from typing import Optional, Sequence, Tuple
 
 import gamla
 
-from lint import comment, dead_code, default_arguments, redundant_lambda
+from lint import (
+    comment,
+    dead_code,
+    default_arguments,
+    environment_vars,
+    redundant_lambda,
+)
 
 _file_contents_to_messages = gamla.compose_left(
     gamla.log_text("{}"),
@@ -17,6 +23,7 @@ _file_contents_to_messages = gamla.compose_left(
                 redundant_lambda.detect,
                 dead_code.detect,
                 default_arguments.detect,
+                environment_vars.detect,
             ),
         ),
         comment.detect,
