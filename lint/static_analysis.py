@@ -8,8 +8,8 @@ from lint import (
     comment,
     dead_code,
     default_arguments,
-    environment_vars,
     development_functions,
+    environment_vars,
     redundant_lambda,
 )
 

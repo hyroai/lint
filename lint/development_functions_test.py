@@ -23,7 +23,7 @@ def test_detect_development_functions():
         leading_question_effect,
     )"""
     debug_breakpoint = """def create_routing_search_slot():
-    ipdb.set_trace() 
+    ipdb.set_trace()
     breakpoint()
     return slot_filling.debug_breakpoint(create_routing_search_slot_with_custom_inference(
     gamla.identity
@@ -34,8 +34,9 @@ def test_detect_development_functions():
             gamla.compose_left(
                 ast.parse,
                 development_functions.detect,
-                gamla.count
-            )),
+                gamla.count,
+            ),
+        ),
         tuple,
-        gamla.assert_that(gamla.equals((4,1,4))),
+        gamla.assert_that(gamla.equals((4, 1, 4))),
     )
