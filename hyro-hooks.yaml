@@ -75,8 +75,3 @@ repos:
       - id: detect-secrets
         args: [ '--baseline', '.secrets.baseline' ]
         exclude: .cloud_cache.json|.gitlab-ci.yml
-
-  - repo: https://github.com/jendrikseipp/vulture
-    rev: v2.6
-    hooks:
-      - id: vulture

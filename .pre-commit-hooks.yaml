@@ -27,7 +27,7 @@
   files: triplets\.csv$
 
 - id: hyro-pre-commit
-  name: Hyro standart hooks
+  name: Hyro standard hooks
   language: script
   entry: ./run-hyro-hooks
   verbose: true
