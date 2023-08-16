@@ -74,4 +74,4 @@ repos:
     hooks:
       - id: detect-secrets
         args: [ '--baseline', '.secrets.baseline' ]
-        exclude: .cloud_cache.json|.gitlab-ci.yml
+        exclude: .cloud_cache.json|.gitlab-ci.yml|.pre-commit-config.yaml
