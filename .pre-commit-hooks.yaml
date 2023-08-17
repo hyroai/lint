@@ -25,3 +25,9 @@
   entry: validate-triplets
   language: python
   files: triplets\.csv$
+
+- id: hyro-pre-commit
+  name: Hyro standard hooks
+  language: script
+  entry: ./run-hyro-hooks
+  verbose: true
