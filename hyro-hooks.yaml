@@ -38,6 +38,7 @@ repos:
     rev: v0.991
     hooks:
       - id: mypy
+        args: [--follow-imports=silent, --ignore-missing-imports]
         exclude: vulture_whitelist.py
         additional_dependencies:
           - types-cachetools
