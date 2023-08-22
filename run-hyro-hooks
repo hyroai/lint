@@ -11,7 +11,7 @@ def main():
     print(HERE)
     print(os.getcwd())
 
-    os.execvpe(cmd[0], cmd, {"SKIP": "mypy"})
+    os.execvpe(cmd[0], cmd, os.environ | {"SKIP": "mypy"})
 
 
 if __name__ == "__main__":
