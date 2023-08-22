@@ -34,18 +34,17 @@ repos:
             "pep8-naming",
           ]
 
-# TODO(erez): Need to make sure that we skip mypy in nlu-runtime.
-#  - repo: https://github.com/pre-commit/mirrors-mypy
-#    rev: v1.5.1
-#    hooks:
-#      - id: mypy
-#        args: [--follow-imports=silent, --ignore-missing-imports]
-#        exclude: vulture_whitelist.py
-#        additional_dependencies:
-#          - types-cachetools
-#          - types-python-dateutil
-#          - types-pytz
-#          - types-requests
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.5.1
+    hooks:
+      - id: mypy
+        args: [--follow-imports=silent, --ignore-missing-imports]
+        exclude: vulture_whitelist.py
+        additional_dependencies:
+          - types-cachetools
+          - types-python-dateutil
+          - types-pytz
+          - types-requests
 
   - repo: https://github.com/hyroai/lint
     rev: 1d908557dfa746aeaabc9e3cd61504b87f851a49
