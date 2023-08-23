@@ -13,6 +13,6 @@ _gen_getenv = gamla.compose_left(
 detect = gamla.compose_left(
     _gen_getenv,
     gamla.map(
-        lambda l: f"Using os.getenv in line {l.lineno} is not allowed! Use get_environment instead.",
+        lambda l: f"Using os.getenv in line {l.lineno} is not allowed! Use nlu.config.get_env_var instead.",
     ),
 )
