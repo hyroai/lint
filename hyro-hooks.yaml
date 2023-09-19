@@ -61,7 +61,7 @@ repos:
     rev: v2.2.2
     hooks:
       - id: codespell
-        entry: codespell --ignore-words=.codespell_ignore --quiet-level=4 --check-filenames
+        entry: codespell --ignore-words=.codespell_ignore --quiet-level=4 --check-filenames --ignore-regex=".*codespell-ignore$"
         exclude: \.(csv|json|txt)$|.*spanish.*
 
   - repo: https://github.com/myint/autoflake
