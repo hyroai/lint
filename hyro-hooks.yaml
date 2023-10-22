@@ -51,6 +51,8 @@ repos:
     hooks:
       - id: format-csv
         files: triplets.csv
+      - id: format-assistant-configuration
+        files: assistant_configuration.json
       - id: validate-triplets
         files: triplets.csv
         args: ["--relations", "action/event", "action/suggestions", "action/switch_command", "concept/action", "--"]
