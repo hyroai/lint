@@ -18,6 +18,7 @@ setuptools.setup(
             "static-analysis=lint.static_analysis:main",
             "make-api-doc=lint.make_api_doc:main",
             "format-csv=lint.format_csv:main",
+            "format-assistant-configuration=lint.format_assistant_configuration.py:main",
             "validate-triplets=lint.validate_triplets:main",
         ],
     },
