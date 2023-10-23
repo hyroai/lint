@@ -1,9 +1,9 @@
 import json
-import os
+import pathlib
 
 from lint import format_assistant_configuration
 
-PARENT_LIB_PATH = os.getcwd()
+PARENT_LIB_PATH = pathlib.Path(__file__).parent.resolve().__str__()
 UNSORTED_ASSISTANT_FILE_PATH = (
     PARENT_LIB_PATH + "/test_mock_data/unsorted_assistant_configuration.json"
 )
