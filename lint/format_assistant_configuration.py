@@ -7,8 +7,7 @@ import gamla
 _sort_by_key = gamla.sort_by(gamla.itemgetter("key"))
 
 
-def sort_assistant_configurations(assistant_configuration: str) -> str:
-    initial_assistant_configuration = json.loads(assistant_configuration)
+def sort_assistant_configurations(initial_assistant_configuration: dict) -> dict:
     initial_assistant_configuration["base_skill"].update(
         {
             "configuration": _sort_by_key(
@@ -36,22 +35,19 @@ def sort_assistant_configurations(assistant_configuration: str) -> str:
             ),
         },
     )
-    return json.dumps(initial_assistant_configuration)
+    return initial_assistant_configuration
 
 
 def _format_file(filename):
     with open(filename, mode="r") as file_processed:
-        content_before = file_processed.read()
+        content_before = json.loads(file_processed.read())
+        sorted_content = sort_assistant_configurations(content_before)
 
-    with open(filename, mode="w") as file_processed:
-        file_processed.write(sort_assistant_configurations(content_before))
-
-    with open(filename, mode="r") as file_processed:
-        content_after = file_processed.read()
-
-    identical = content_before == content_after
+    identical = sorted_content == content_before
     if not identical:
-        print(f"File {filename} has been modified.")  # noqa:T201
+        with open(filename, mode="w") as file_processed:
+            file_processed.write(json.dumps(sorted_content))
+            print(f"File {filename} has been modified.")  # noqa:T201
 
     return identical
 
