@@ -17,15 +17,16 @@ def sort_assistant_configurations_v2(initial_assistant_configuration: dict) -> d
             ),
         },
     )
-    initial_assistant_configuration["context"]["configuration"].update(
-        {
-            "configuration": _sort_by_key(
-                initial_assistant_configuration["context"]["configuration"][
-                    "configuration"
-                ],
-            ),
-        },
-    )
+    if initial_assistant_configuration["context"] is not None:
+        initial_assistant_configuration["context"]["configuration"].update(
+            {
+                "configuration": _sort_by_key(
+                    initial_assistant_configuration["context"]["configuration"][
+                        "configuration"
+                    ],
+                ),
+            },
+        )
     initial_assistant_configuration.update(
         {
             "skills": gamla.pipe(
