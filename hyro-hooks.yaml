@@ -83,11 +83,5 @@ repos:
   - repo: https://github.com/semgrep/semgrep
     rev: 'v1.73.0'
     hooks:
-      - id: semgrep-ci
-        args: [ "--lang", "python", "--pattern", "def $FUNC(..., $ARG=..., ...): ...", '--error' ]
-
-  - repo: https://github.com/semgrep/semgrep
-    rev: 'v1.73.0'
-    hooks:
       - id: semgrep
         args: [ '--config', 'https://raw.githubusercontent.com/hyroai/lint/ENG-10531-add-semgrep/rule.yaml', '--error' ]
