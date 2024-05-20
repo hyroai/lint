@@ -1,5 +1,5 @@
 rules:
-  - id: untitled_rule
+  - id: check_for_default_args_in_function
     languages:
       - python
     severity: ERROR
