@@ -84,4 +84,4 @@ repos:
     rev: 'v1.73.0'
     hooks:
       - id: semgrep
-        args: [ '--config', 'https://raw.githubusercontent.com/hyroai/lint/ENG-10531-add-semgrep/rule.yaml', '--error' ]
+        args: [ '--config', 'https://raw.githubusercontent.com/hyroai/lint/master/rule.yaml', '--error' ]
