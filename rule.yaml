@@ -1,0 +1,9 @@
+rules:
+  - id: untitled_rule
+    languages:
+      - python
+    severity: ERROR
+    message: "function $FUNC contains default argument!"
+    pattern: |-
+      def $FUNC(..., $ARG=..., ...):
+            ...
