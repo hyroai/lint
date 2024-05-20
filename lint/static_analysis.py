@@ -7,7 +7,6 @@ import gamla
 from lint import (
     comment,
     dead_code,
-    default_arguments,
     development_functions,
     environment_vars,
     redundant_lambda,
@@ -23,7 +22,6 @@ _file_contents_to_messages = gamla.compose_left(
             gamla.juxtcat(
                 redundant_lambda.detect,
                 dead_code.detect,
-                default_arguments.detect,
                 environment_vars.detect,
                 development_functions.detect,
             ),

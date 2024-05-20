@@ -1,0 +1,9 @@
+rules:
+  - id: check_for_default_args_in_function
+    languages:
+      - python
+    severity: ERROR
+    message: "function $FUNC contains default argument!"
+    pattern: |-
+      def $FUNC(..., $ARG=..., ...):
+            ...
