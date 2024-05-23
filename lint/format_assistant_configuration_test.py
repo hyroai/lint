@@ -174,22 +174,6 @@ _SORTED_ASSISTANT = {
             ],
         },
     ),
-    "context": {
-        "skill_id": "context",
-        "skill_instance_name": "context_skill",
-        "configuration": [
-            {
-                "key": "918088c7-424d-4db6-b059-d8e9af3b4651",
-                "type": "SINGLE_OPTION",
-                "configuration": [
-                    {
-                        "selected_option": "fetch_phone_number_from_widget_load",
-                        "selected_option_configuration": [],
-                    },
-                ],
-            },
-        ],
-    },
     "base_skill": {
         "skill_id": "voice_essentials",
         "skill_instance_name": "voice_essentials_skill",
@@ -459,25 +443,6 @@ _SORTED_ASSISTANT_V2 = {
             },
         },
     ),
-    "context": {
-        "skill_id": "context",
-        "skill_instance_name": "context_skill",
-        "configuration": {
-            "key": "7a1ed5a3-0011-401c-a3b1-de9e0e3ad1d7",
-            "type": "OBJECT",
-            "configuration": [
-                {
-                    "key": "918088c7-424d-4db6-b059-d8e9af3b4651",
-                    "type": "CHOOSE_ONE",
-                    "configuration": {
-                        "key": "1a07ee20-3e5c-4698-a0e6-9b59647a1a99",
-                        "type": "OBJECT",
-                        "configuration": [],
-                    },
-                },
-            ],
-        },
-    },
     "base_skill": {
         "skill_id": "voice_essentials",
         "skill_instance_name": "voice_essentials_skill",
