@@ -17,16 +17,6 @@ def sort_assistant_configurations_v2(initial_assistant_configuration: dict) -> d
             ),
         },
     )
-    if initial_assistant_configuration["context"] is not None:
-        initial_assistant_configuration["context"]["configuration"].update(
-            {
-                "configuration": _sort_by_key(
-                    initial_assistant_configuration["context"]["configuration"][
-                        "configuration"
-                    ],
-                ),
-            },
-        )
     initial_assistant_configuration.update(
         {
             "skills": gamla.pipe(
@@ -55,13 +45,6 @@ def sort_assistant_configurations_v1(initial_assistant_configuration: dict) -> d
         {
             "configuration": _sort_by_key(
                 initial_assistant_configuration["base_skill"]["configuration"],
-            ),
-        },
-    )
-    initial_assistant_configuration["context"].update(
-        {
-            "configuration": _sort_by_key(
-                initial_assistant_configuration["context"]["configuration"],
             ),
         },
     )

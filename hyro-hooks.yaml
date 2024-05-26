@@ -37,7 +37,7 @@ repos:
           - types-requests
 
   - repo: https://github.com/hyroai/lint
-    rev: 05a7c0ef81eea887c7d17902e6606d9f09682a0b
+    rev: 400de1987ce091992c2db7a2500b3343ee27a2a6
     hooks:
       - id: format-csv
         files: triplets.csv
@@ -84,4 +84,4 @@ repos:
     rev: 'v1.73.0'
     hooks:
       - id: semgrep
-        args: [ '--config', 'https://raw.githubusercontent.com/hyroai/lint/master/rule.yaml', '--error' ]
+        args: [ '--metrics', 'off', '--config', 'https://raw.githubusercontent.com/hyroai/lint/master/rule.yaml', '--error' ]

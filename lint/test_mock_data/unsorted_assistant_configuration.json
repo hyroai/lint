@@ -160,22 +160,6 @@
       ]
     }
   ],
-  "context": {
-    "skill_id": "context",
-    "skill_instance_name": "context_skill",
-    "configuration": [
-      {
-        "key": "918088c7-424d-4db6-b059-d8e9af3b4651",
-        "type": "SINGLE_OPTION",
-        "configuration": [
-          {
-            "selected_option": "fetch_phone_number_from_widget_load",
-            "selected_option_configuration": []
-          }
-        ]
-      }
-    ]
-  },
   "base_skill": {
     "skill_id": "voice_essentials",
     "skill_instance_name": "voice_essentials_skill",
