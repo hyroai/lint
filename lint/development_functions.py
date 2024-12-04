@@ -41,6 +41,7 @@ def _is_development_call(util: str):
             "ipdb",
             "gamla.debug",
             "debug.debug",
+            "slot_filling.debug_log"
         ],
         gamla.anymap(gamla.contains(util)),
     )

@@ -16,8 +16,14 @@ def test_detect_development_functions():
         )
     )
         """
-    slot_filling_debug = """ask_leading_question = slot_filling.require_or_no_effect(
+    debug_debug = """ask_leading_question = slot_filling.require_or_no_effect(
         debug.debug(logic.complement(
+            composers.compose_left_unary(search_state, _is_search_performed)
+        )),
+        leading_question_effect,
+    )"""
+    slot_filling_debug = """ask_leading_question = slot_filling.require_or_no_effect(
+        slot_filling.debug_log(logic.complement(
             composers.compose_left_unary(search_state, _is_search_performed)
         )),
         leading_question_effect,
@@ -29,7 +35,7 @@ def test_detect_development_functions():
     gamla.identity
 ))"""
     gamla.pipe(
-        (cache_force_and_debug, slot_filling_debug, debug_breakpoint),
+        (cache_force_and_debug, debug_debug, slot_filling_debug, debug_breakpoint),
         gamla.map(
             gamla.compose_left(
                 ast.parse,
@@ -38,5 +44,5 @@ def test_detect_development_functions():
             ),
         ),
         tuple,
-        gamla.assert_that(gamla.equals((4, 1, 4))),
+        gamla.assert_that(gamla.equals((4, 1, 1, 4))),
     )
