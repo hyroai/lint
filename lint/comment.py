@@ -12,11 +12,11 @@ detect = gamla.compose_left(
             gamla.filter(
                 gamla.alljuxt(
                     gamla.compose_left(str.lower, lambda s: re.search(r"\btodo\b", s)),
-                    lambda s: not re.search(r"(#|//)\sTODO\(([A-Z]+)-\d+\):\s.*", s),
+                    lambda s: not re.search(r"(#|//)\sTODO\([a-zA-Z]+\):\s.*", s),
                 ),
             ),
             gamla.map(
-                lambda s: f"Malformatted `TODO` syntax (should be `TODO(<Jira-ticket>): ...`): [{s}]",
+                lambda s: f"Malformatted `TODO` syntax (should be `TODO(name): ...`): [{s}]",
             ),
         ),
         gamla.compose_left(
