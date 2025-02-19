@@ -24,7 +24,6 @@ def _is_gamla_frozendict(node: ast.Call) -> bool:
 
 
 def _is_configuration_language_key(key: ast.AST) -> bool:
-    """Check if an AST node represents configuration.Language.EN/ES"""
     return (
             isinstance(key, ast.Attribute)
             and isinstance(key.value, ast.Attribute)
@@ -43,38 +42,16 @@ def _get_language_keys(dict_node: ast.Dict) -> set:
     }
 
 
-def _validate_frozendict_node(frozendict_node: ast.Call, lineno: int) -> list:
+def _validate_frozendict_missing_languages(frozendict_node: ast.Call) -> bool:
     if not frozendict_node.args:
-        return []
+        return False
 
     dict_arg = frozendict_node.args[0]
     if not isinstance(dict_arg, ast.Dict):
-        return []
+        return False
 
     language_keys = _get_language_keys(dict_arg)
-
-    if "EN" not in language_keys or "ES" not in language_keys:
-        return [
-            f"gamla.frozendict at line {lineno} must include both "
-            "configuration.Language.EN and configuration.Language.ES"
-        ]
-    return []
-
-
-def _find_and_validate_frozendict(node: ast.Call) -> list:
-    errors = []
-
-    # Check all positional arguments
-    for arg in node.args:
-        if _is_gamla_frozendict(arg):
-            errors.extend(_validate_frozendict_node(arg, node.lineno))
-
-    # Check all keyword arguments
-    for keyword in node.keywords:
-        if _is_gamla_frozendict(keyword.value):
-            errors.extend(_validate_frozendict_node(keyword.value, node.lineno))
-
-    return errors
+    return "EN" not in language_keys or "ES" not in language_keys
 
 
 _gen_configurable_actions = gamla.compose_left(
@@ -83,7 +60,28 @@ _gen_configurable_actions = gamla.compose_left(
     gamla.filter(_is_configurable_action_call),
 )
 
+
+def _find_invalid_frozendict(node: ast.Call):
+    invalid_frozendict = []
+
+    # Check all positional arguments
+    for arg in node.args:
+        if _is_gamla_frozendict(arg) and _validate_frozendict_missing_languages(arg):
+            invalid_frozendict.append((arg, node.lineno))
+
+    # Check all keyword arguments
+    for keyword in node.keywords:
+        if _is_gamla_frozendict(keyword.value) and _validate_frozendict_missing_languages(keyword.value):
+            invalid_frozendict.append((keyword.value, node.lineno))
+
+    return invalid_frozendict
+
+
 detect = gamla.compose_left(
     _gen_configurable_actions,
-    gamla.mapcat(_find_and_validate_frozendict),
+    gamla.mapcat(_find_invalid_frozendict),
+    gamla.map(
+        lambda
+            l: f"gamla.frozendict at line {l[1]} must include both configuration.Language.EN and configuration.Language.ES",
+    ),
 )
