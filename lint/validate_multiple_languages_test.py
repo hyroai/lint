@@ -110,7 +110,23 @@ CONFIRM_ACTION = configurable_cg.action(
                 }
             ),
         )
-"""
+""",
+
+        """SCHEDULE_APPOINTMENT_SUCCEEDED_CONFIGURABLE22 = configurable_cg.action(
+            key="054783d9-a252-43f3-a686-7b8a2eeac82e",
+            display_key="schedule_appointment_succeeded",
+            default_action=gamla.frozendict(
+                {
+                    configuration.Language.ES: bot_action.Action(
+                        "Alright! You are all set. {visit_type} with {provider_name} is scheduled for {appointment_date} at {appointment_time}. The address is {location_address}."
+                    )
+                }
+            ),
+            description="What to say when successfully scheduled appointment",
+            read_only=False,
+            is_mandatory=True,
+        )"""
+
     ]
 
     for invalid_case in invalid_cases:
