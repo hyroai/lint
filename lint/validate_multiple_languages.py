@@ -130,4 +130,5 @@ detect = gamla.compose_left(
     _gen_configurable_actions,
     gamla.mapcat(_find_invalid_frozendict),
     gamla.map(_format_error_message),
+    tuple,
 )

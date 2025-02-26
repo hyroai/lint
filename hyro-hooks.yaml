@@ -37,7 +37,7 @@ repos:
           - types-requests
 
   - repo: https://github.com/hyroai/lint
-    rev: db9544b74d6684173bd1e3378d258b7e4cd08c22
+    rev: ce4e8e3a212933ca6abedb07fb2303998245da87
     hooks:
       - id: format-csv
         files: triplets.csv
