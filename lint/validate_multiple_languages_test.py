@@ -110,6 +110,50 @@ CONFIRM_ACTION = configurable_cg.action(
                 }
             ),
         )
+""",
+
+        """SCHEDULE_APPOINTMENT_SUCCEEDED_CONFIGURABLE22 = configurable_cg.action(
+            key="054783d9-a252-43f3-a686-7b8a2eeac82e",
+            display_key="schedule_appointment_succeeded",
+            default_action=gamla.frozendict(
+                {
+                    configuration.Language.ES: bot_action.Action(
+                        "Alright! You are all set. {visit_type} with {provider_name} is scheduled for {appointment_date} at {appointment_time}. The address is {location_address}."
+                    )
+                }
+            ),
+            description="What to say when successfully scheduled appointment",
+            read_only=False,
+            is_mandatory=True,
+        )"""
+        ,
+
+        """
+CONFIRM_ACTION = configurable_cg.action(
+        "confirm-action",
+        "Confirm Action",
+        gamla.frozendict(
+            {
+                configuration.Language.EN: bot_action.Action("Do you confirm?"),
+                configuration.Language.ES: bot_action.Action(""),
+            }
+        ),
+        "Confirmation prompt",
+        False,
+    )
+""",
+
+        """
+test2 = configurable_cg.action(
+            key="27dbb02c-0642-4d9a-8899-c28b1058ed8a",
+            display_key="offer_appointment_combination",
+            default_action=bot_action.Action(
+                "I can help you schedule {visit_type} with {provider_name}, at {location_address}. Should I go ahead and check for availability?"
+            ),
+            description="Offer the user to schedule an appointment with a given provider, visit type and location address.",
+            read_only=False,
+            is_mandatory=True,
+        )
 """
     ]
 
