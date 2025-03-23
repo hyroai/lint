@@ -5,6 +5,7 @@ from lint import comment
 
 def test_good():
     for good_comment in [
+        "## I am a markdown numbered list bullet",
         "# TODO(uri): I am a good comment.",
         "# I am good too.",
         "a = 3  # I am good.",
