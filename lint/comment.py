@@ -19,10 +19,6 @@ detect = gamla.compose_left(
                 lambda s: f"Malformatted `TODO` syntax (should be `TODO(name): ...`): [{s}]",
             ),
         ),
-        gamla.compose_left(
-            gamla.filter(lambda s: re.search(r"^\s*(#|//)[^#\s:]", s)),
-            gamla.map(lambda s: f"Comment should start with a space or a colon: [{s}]"),
-        ),
     ),
     gamla.concat,
 )

@@ -30,9 +30,7 @@ def test_bad():
         "#todo: do something",
         "# TODO ROM: uncomment when vaccine faq fixed",
         "# TODO (rachel): Remove if not relevant after rescraping novant's vaccine faq.",
-        "#no leading space",
         "// todo(david): I am a bad comment.",
-        "//no leading space",
     ]:
         gamla.pipe(
             bad_comment,
