@@ -18,5 +18,5 @@ detect = gamla.compose_left(
             lambda s: f"Malformatted `TODO` syntax (should be `TODO(name): ...`): [{s}]",
         ),
     ),
-    gamla.concat,
+    tuple,
 )
