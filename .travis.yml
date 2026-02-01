@@ -2,7 +2,11 @@ dist: jammy
 language: python
 python:
   - "3.14"
-script:
-  - pytest
 install:
-  - pip install -e .
+  - curl -LsSf https://astral.sh/uv/install.sh | sh
+  - export PATH="$HOME/.local/bin:$PATH"
+  - uv venv --python $TRAVIS_PYTHON_VERSION
+  - source .venv/bin/activate
+  - uv sync
+script:
+  - uv run pytest

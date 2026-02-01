@@ -6,6 +6,15 @@ Python static analysis linting tools.
 
 **Requires Python 3.14+.** See [PYTHON314_BREAKING_CHANGES.md](PYTHON314_BREAKING_CHANGES.md) for breaking changes from 3.11.
 
+## Development (uv)
+
+Install [uv](https://docs.astral.sh/uv/) and run:
+
+```bash
+uv sync
+uv run pytest
+```
+
 ## Pre-commit config
 
 ```yaml

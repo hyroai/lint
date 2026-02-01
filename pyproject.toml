@@ -10,6 +10,9 @@ readme = "README.md"
 requires-python = ">=3.14"
 dependencies = ["gamla"]
 
+[dependency-groups]
+dev = ["pytest"]
+
 [project.scripts]
 static-analysis = "lint.static_analysis:main"
 make-api-doc = "lint.make_api_doc:main"
@@ -22,7 +25,6 @@ where = ["."]
 include = ["lint*"]
 
 [tool.setuptools]
-# Use quoted keys so tomllib parses correctly (hyphens in unquoted keys can fail in Python 3.14)
 "zip-safe" = false
 "include-package-data" = true
 
