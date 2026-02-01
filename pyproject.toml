@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=80", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lint"
+version = "1"
+description = "Python static analysis linting tools."
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = ["gamla"]
+
+[project.scripts]
+static-analysis = "lint.static_analysis:main"
+make-api-doc = "lint.make_api_doc:main"
+format-csv = "lint.format_csv:main"
+format-assistant-configuration = "lint.format_assistant_configuration:main"
+validate-triplets = "lint.validate_triplets:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["lint*"]
+
+[tool.setuptools]
+zip-safe = false
+include-package-data = true
