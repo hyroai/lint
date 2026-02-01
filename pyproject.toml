@@ -22,10 +22,11 @@ where = ["."]
 include = ["lint*"]
 
 [tool.setuptools]
-zip-safe = false
-include-package-data = true
+# Use quoted keys so tomllib parses correctly (hyphens in unquoted keys can fail in Python 3.14)
+"zip-safe" = false
+"include-package-data" = true
 
-git[tool.isort]
+[tool.isort]
 float_to_top = true
 atomic = true
 line_length = 88
