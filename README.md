@@ -6,13 +6,17 @@ Python static analysis linting tools.
 
 **Requires Python 3.14+.** See [PYTHON314_BREAKING_CHANGES.md](PYTHON314_BREAKING_CHANGES.md) for breaking changes from 3.11.
 
-## Development (uv)
+## Development
 
-Install [uv](https://docs.astral.sh/uv/) and run:
+Test dependencies (e.g. pytest) are in a **dependency group** per [PEP 735](https://peps.python.org/pep-0735/), so they are not shipped in the built package.
+
+With pip, use the [dependency-groups](https://pypi.org/project/dependency-groups/) package:
 
 ```bash
-uv sync
-uv run pytest
+pip install -e .
+pip install "dependency-groups[cli]"
+pip-install-dependency-groups test
+pytest
 ```
 
 ## Pre-commit config

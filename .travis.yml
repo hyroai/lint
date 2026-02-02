@@ -3,10 +3,8 @@ language: python
 python:
   - "3.14"
 install:
-  - curl -LsSf https://astral.sh/uv/install.sh | sh
-  - export PATH="$HOME/.local/bin:$PATH"
-  - uv venv --python $TRAVIS_PYTHON_VERSION
-  - source .venv/bin/activate
-  - uv sync
+  - pip install -e .
+  - pip install "dependency-groups[cli]"
+  - pip-install-dependency-groups test
 script:
-  - uv run pytest
+  - pytest
