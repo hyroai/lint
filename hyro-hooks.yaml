@@ -53,7 +53,7 @@ repos:
     rev: v4.4.0
     hooks:
       - id: check-added-large-files
-        exclude: assistant_configuration.json
+        exclude: assistant_configuration.json|^tests/cassettes/
       - id: debug-statements
       - id: check-json
       - id: pretty-format-json
