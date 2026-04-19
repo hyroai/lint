@@ -19,6 +19,7 @@ make-api-doc = "lint.make_api_doc:main"
 format-csv = "lint.format_csv:main"
 format-assistant-configuration = "lint.format_assistant_configuration:main"
 validate-triplets = "lint.validate_triplets:main"
+check-uuid-quality = "lint.uuid_quality:main"
 
 [tool.setuptools.packages.find]
 where = ["."]
