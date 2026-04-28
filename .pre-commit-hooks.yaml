@@ -33,6 +33,13 @@
   language: python
   files: triplets\.csv$
 
+- id: check-uuid-quality
+  name: check UUID quality
+  description: Detect hand-typed / non-random UUIDs in staged Python changes.
+  entry: check-uuid-quality
+  language: python
+  types: [python]
+
 - id: hyro-pre-commit
   name: Hyro standard hooks
   language: script
