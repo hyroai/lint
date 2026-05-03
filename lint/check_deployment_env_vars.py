@@ -66,6 +66,15 @@ def _format_error(var, source_chart, missing_charts):
     )
 
 
+def _stale_exceptions(new_vars_by_chart, exceptions):
+    return tuple(
+        f"{var} is now in {source_chart} but {source_chart} is still listed in {_EXCEPTIONS_FILE} — consider removing it."
+        for source_chart, new_vars in new_vars_by_chart.items()
+        for var in sorted(new_vars)
+        if source_chart in exceptions.get(var, {})
+    )
+
+
 def detect(new_vars_by_chart, all_vars_by_chart, exceptions):
     return tuple(
         _format_error(var, source_chart, missing)
@@ -115,6 +124,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         _chart_name(filepath): _vars_from_added_diff_lines(_staged_diff(filepath))
         for filepath in staged_files
     }
+
+    for warning in _stale_exceptions(new_vars_by_chart, exceptions):
+        print(warning)  # noqa: T201
 
     errors = detect(new_vars_by_chart, all_deployments, exceptions)
     if errors:

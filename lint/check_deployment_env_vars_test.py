@@ -66,6 +66,26 @@ def test_no_error_when_no_new_vars():
     )
 
 
+def test_stale_exception_warning_when_var_added_to_excepted_chart():
+    gamla.pipe(
+        check_deployment_env_vars._stale_exceptions(
+            {"service-a": frozenset({"SOME_VAR"})},
+            {"SOME_VAR": {"service-a": "not needed"}},
+        ),
+        gamla.assert_that(gamla.nonempty),
+    )
+
+
+def test_no_stale_exception_when_chart_not_excepted():
+    gamla.pipe(
+        check_deployment_env_vars._stale_exceptions(
+            {"service-a": frozenset({"SOME_VAR"})},
+            {"SOME_VAR": {"service-b": "not needed"}},
+        ),
+        gamla.assert_that(gamla.empty),
+    )
+
+
 def test_vars_from_added_diff_lines_detects_new_var():
     gamla.pipe(
         """\
