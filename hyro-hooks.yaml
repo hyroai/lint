@@ -1,16 +1,16 @@
 repos:
   - repo: https://github.com/PyCQA/isort
-    rev: 5.12.0
+    rev: 8.0.1
     hooks:
       - id: isort
 
   - repo: https://github.com/ambv/black
-    rev: 22.12.0
+    rev: 26.5.1
     hooks:
       - id: black
 
   - repo: https://github.com/pycqa/flake8
-    rev: 6.0.0
+    rev: 7.3.0
     hooks:
       - id: flake8
         exclude: vulture_whitelist.py
@@ -25,7 +25,7 @@ repos:
           ]
 
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.5.1
+    rev: v2.3.0
     hooks:
       - id: mypy
         args: [--follow-imports=silent, --ignore-missing-imports]
@@ -37,7 +37,7 @@ repos:
           - types-requests
 
   - repo: https://github.com/hyroai/lint
-    rev: a686cfe39da54ba62325708a549cc0e1222461ed
+    rev: 20cf0c57a53d526fffeb2e499bdf0288c41b3e9c
     hooks:
       - id: format-csv
         files: triplets.csv
@@ -51,7 +51,7 @@ repos:
       - id: check-uuid-quality
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v6.0.0
     hooks:
       - id: check-added-large-files
         exclude: assistant_configuration.json|^tests/cassettes/
@@ -62,27 +62,27 @@ repos:
         exclude: .versions.json
 
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.2.2
+    rev: v2.4.3
     hooks:
       - id: codespell
         entry: codespell --ignore-words=.codespell_ignore --quiet-level=4 --check-filenames --ignore-regex=".*codespell-ignore$"
-        exclude: \.(csv|json|txt)$|.*spanish.*
+        exclude: \.(csv|json|txt|pdf)$|.*spanish.*
 
   - repo: https://github.com/myint/autoflake
-    rev: v2.0.0
+    rev: v2.3.3
     hooks:
       - id: autoflake
         entry: autoflake -i --remove-all-unused-imports
 
   - repo: https://github.com/Yelp/detect-secrets
-    rev: v1.4.0
+    rev: v1.5.0
     hooks:
       - id: detect-secrets
         args: [ '--baseline', '.secrets.baseline' ]
         exclude: .cloud_cache.json|.gitlab-ci.yml|.pre-commit-config.yaml
 
   - repo: https://github.com/semgrep/semgrep
-    rev: 'v1.73.0'
+    rev: 'v1.171.0'
     hooks:
       - id: semgrep
         args: [ '--metrics', 'off', '--config', 'https://raw.githubusercontent.com/hyroai/lint/master/rule.yaml', '--error' ]
