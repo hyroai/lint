@@ -45,4 +45,4 @@ repos:
     hooks:
       - id: codespell
         entry: codespell --ignore-words=.codespell_ignore --quiet-level=4 --check-filenames
-        exclude: \.(csv|json|txt)$
+        exclude: \.(csv|json|txt|lock)$

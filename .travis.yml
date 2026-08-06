@@ -3,8 +3,8 @@ language: python
 python:
   - "3.14"
 install:
-  - pip install -e .
-  - pip install "dependency-groups[cli]"
-  - pip-install-dependency-groups test
+  - curl -LsSf https://astral.sh/uv/install.sh | sh
+  - export PATH="$HOME/.local/bin:$PATH"
+  - uv sync --locked --group test
 script:
-  - pytest
+  - uv run pytest
