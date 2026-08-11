@@ -9,6 +9,7 @@ from lint import (
     dead_code,
     development_functions,
     environment_vars,
+    inert_duplication,
     redundant_lambda,
     validate_multiple_languages,
 )
@@ -25,6 +26,7 @@ _file_contents_to_messages = gamla.compose_left(
                 dead_code.detect,
                 environment_vars.detect,
                 development_functions.detect,
+                inert_duplication.detect,
                 validate_multiple_languages.detect,
             ),
         ),
