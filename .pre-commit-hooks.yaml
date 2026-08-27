@@ -40,6 +40,13 @@
   language: python
   types: [python]
 
+- id: check-deployment-env-vars
+  name: Check deployment env var consistency
+  description: Warn when a new env var is added to some Helm deployments but not others.
+  entry: check-deployment-env-vars
+  language: python
+  files: deploy/.+/templates/deployment\.yaml$
+
 - id: hyro-pre-commit
   name: Hyro standard hooks
   language: script
