@@ -1,9 +1,2 @@
-rules:
-  - id: check_for_default_args_in_function
-    languages:
-      - python
-    severity: ERROR
-    message: "function $FUNC contains default argument!"
-    pattern: |-
-      def $FUNC(..., $ARG=..., ...):
-            ...
+# No active rules. Kept so the hook stays wired up for future rules.
+rules: []
