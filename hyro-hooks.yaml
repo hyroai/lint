@@ -80,3 +80,9 @@ repos:
       - id: detect-secrets
         args: [ '--baseline', '.secrets.baseline' ]
         exclude: .cloud_cache.json|.gitlab-ci.yml|.pre-commit-config.yaml
+
+  - repo: https://github.com/semgrep/semgrep
+    rev: 'v1.171.0'
+    hooks:
+      - id: semgrep
+        args: [ '--metrics', 'off', '--config', 'https://raw.githubusercontent.com/hyroai/lint/master/rule.yaml', '--error' ]
