@@ -40,6 +40,13 @@
   language: python
   types: [python]
 
+- id: check-broad-except
+  name: check broad except
+  description: Disallow bare/Exception/BaseException handlers in staged Python changes (tests exempt).
+  entry: check-broad-except
+  language: python
+  types: [python]
+
 - id: hyro-pre-commit
   name: Hyro standard hooks
   language: script
