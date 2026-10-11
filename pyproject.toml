@@ -20,6 +20,7 @@ format-csv = "lint.format_csv:main"
 format-assistant-configuration = "lint.format_assistant_configuration:main"
 validate-triplets = "lint.validate_triplets:main"
 check-uuid-quality = "lint.uuid_quality:main"
+check-broad-except = "lint.broad_except:main"
 
 [tool.setuptools.packages.find]
 where = ["."]
