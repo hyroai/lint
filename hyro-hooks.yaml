@@ -37,7 +37,7 @@ repos:
           - types-requests
 
   - repo: https://github.com/hyroai/lint
-    rev: f0226097cb3c6eafd14dd642a59ae71812743e7b
+    rev: 010176386ca071ce04ca1a848506e914e6e899ee
     hooks:
       - id: format-csv
         files: triplets.csv
@@ -49,6 +49,7 @@ repos:
       - id: static-analysis
         exclude: vulture_whitelist.py
       - id: check-uuid-quality
+      - id: check-broad-except
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
