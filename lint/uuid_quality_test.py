@@ -1,4 +1,4 @@
-from lint.uuid_quality import check_uuid
+from lint.uuid_quality import check_uuid, find_suspicious_uuids
 
 
 def test_valid_v4_passes():
@@ -57,3 +57,40 @@ def test_scheduling_eligibility_bb_flagged():
 
 def test_invalid_uuid_string():
     assert check_uuid("not-a-uuid-at-all-nope-nope12345678") is not None
+
+
+_BAD = "a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d"
+
+
+def test_line_with_suspicious_uuid_flagged():
+    assert find_suspicious_uuids(f'X = "{_BAD}"') == [
+        (_BAD, "sequential pattern detected — looks hand-typed")
+    ]
+
+
+def test_noqa_with_reason_allowed():
+    assert not find_suspicious_uuids(
+        f'X = "{_BAD}"  # noqa: UUID001 - matches the id in the vendor API'
+    )
+
+
+def test_noqa_with_reason_among_other_codes_allowed():
+    assert not find_suspicious_uuids(f'X = "{_BAD}"  # noqa: E501, UUID001 external id')
+
+
+def test_noqa_without_reason_flagged():
+    [(_, problem)] = find_suspicious_uuids(f'X = "{_BAD}"  # noqa: UUID001')
+    assert "needs a reason" in problem
+
+
+def test_noqa_with_only_punctuation_flagged():
+    [(_, problem)] = find_suspicious_uuids(f'X = "{_BAD}"  # noqa: UUID001 -')
+    assert "needs a reason" in problem
+
+
+def test_noqa_for_other_code_flagged():
+    assert find_suspicious_uuids(f'X = "{_BAD}"  # noqa: E501 - long line')
+
+
+def test_good_uuid_on_line_not_flagged():
+    assert not find_suspicious_uuids('X = "2cfdf745-85a0-41be-9d93-1f89e5b70de7"')

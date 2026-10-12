@@ -10,6 +10,9 @@ Detection
 2. Interleaved sequential nibbles — catches UUIDs like ``e1d2c3b4-a5f6-…``
    that satisfy v4 format but were clearly typed by hand.
 3. Straight sequential nibbles — catches runs like ``0a1b2c3d4e5f``.
+
+A suspicious UUID is allowed when its line carries
+``# noqa: UUID001 - <reason>``.  An opt-out without a reason is still flagged.
 """
 
 import argparse
@@ -25,6 +28,14 @@ _UUID_RE = re.compile(
 )
 
 _HUNK_RE = re.compile(r"\+(\d+)")
+
+_NOQA_RE = re.compile(
+    r"#\s*noqa:(?:\s*[A-Z]+[0-9]+\s*,)*\s*UUID001\b(?:\s*,\s*[A-Z]+[0-9]+\b)*(?P<reason>.*)",
+)
+
+_REASON_PUNCTUATION = " \t-–—:"
+
+_MISSING_REASON = "`# noqa: UUID001` needs a reason, e.g. `# noqa: UUID001 - <why>`"
 
 _ALLOWED_VERSIONS = {4, 5, 7}
 
@@ -92,6 +103,30 @@ def check_uuid(u: str) -> Optional[str]:
     return None
 
 
+def _opt_out_problem(line: str) -> Optional[str]:
+    """Return ``""`` for a valid opt-out, an error for one without a reason, else ``None``."""
+    match = _NOQA_RE.search(line)
+    if not match:
+        return None
+    return "" if match.group("reason").strip(_REASON_PUNCTUATION) else _MISSING_REASON
+
+
+def find_suspicious_uuids(line: str) -> list[tuple[str, str]]:
+    """Return ``(uuid, problem)`` for suspicious UUIDs on *line* that are not opted out."""
+    findings: list[tuple[str, str]] = []
+    for match in _UUID_RE.finditer(line):
+        u = match.group(1)
+        error = check_uuid(u)
+        if not error:
+            continue
+        opt_out = _opt_out_problem(line)
+        if opt_out is None:
+            findings.append((u, error))
+        elif opt_out:
+            findings.append((u, opt_out))
+    return findings
+
+
 def _get_added_lines(filepath: str) -> list[tuple[int, str]]:
     """Return ``(line_number, text)`` pairs for every added line in the staged diff."""
     try:
@@ -138,17 +173,15 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             continue
 
         for lineno, line in _get_added_lines(filepath):
-            for match in _UUID_RE.finditer(line):
-                u = match.group(1)
-                error = check_uuid(u)
-                if error:
-                    errors.append(f"  {filepath}:{lineno}: {u} — {error}")
+            for u, error in find_suspicious_uuids(line):
+                errors.append(f"  {filepath}:{lineno}: {u} — {error}")
 
     if errors:
         print("Suspicious UUIDs in staged changes:\n")  # noqa: T201
         print("\n".join(errors))  # noqa: T201
         print(  # noqa: T201
             '\nFix: python3 -c "import uuid; print(uuid.uuid4())"'
+            "\nIf the UUID is intentional, add `# noqa: UUID001 - <reason>` on its line.",
         )
         return 1
 
