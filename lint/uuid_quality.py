@@ -112,7 +112,7 @@ def _opt_out_problem(line: str) -> Optional[str]:
 
 
 def find_suspicious_uuids(line: str) -> list[tuple[str, str]]:
-    """Return ``(uuid, problem)`` for suspicious UUIDs on *line* that are not opted out."""
+    """Return a list of ``(uuid, problem)`` tuples for suspicious UUIDs on *line* that are not opted out."""
     findings: list[tuple[str, str]] = []
     for match in _UUID_RE.finditer(line):
         u = match.group(1)

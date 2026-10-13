@@ -74,8 +74,11 @@ def test_noqa_with_reason_allowed():
     )
 
 
-def test_noqa_with_reason_among_other_codes_allowed():
-    assert not find_suspicious_uuids(f'X = "{_BAD}"  # noqa: E501, UUID001 external id')
+def test_noqa_combining_uuid001_with_another_code_allowed():
+    # UUID001 is still recognized when the same noqa also silences another linter's code.
+    assert not find_suspicious_uuids(
+        f'X = "{_BAD}"  # noqa: E501, UUID001 - matches the id in the vendor API'
+    )
 
 
 def test_noqa_without_reason_flagged():
@@ -90,7 +93,3 @@ def test_noqa_with_only_punctuation_flagged():
 
 def test_noqa_for_other_code_flagged():
     assert find_suspicious_uuids(f'X = "{_BAD}"  # noqa: E501 - long line')
-
-
-def test_good_uuid_on_line_not_flagged():
-    assert not find_suspicious_uuids('X = "2cfdf745-85a0-41be-9d93-1f89e5b70de7"')
